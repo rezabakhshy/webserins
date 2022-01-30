@@ -1,4 +1,3 @@
-
 from pyrogram import Client,filters
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
@@ -47,22 +46,30 @@ def my_creater(client,message):
     message.reply("باشه الان صداش میکنم ببینم کجاس این پدر من😁")
     message.reply(f"[پدر نازنینم](tg://user?id=618260788) انلاین شدی بیا ببین [{message.from_user.first_name}](tg://user?id={message.from_user.id}) صدات کرده چیکار داره")
 
-@app.on_message(filters.group & filters.regex("^(t|T)ag$"))
+@app.on_message(filters.group & filters.regex("^(t|T)ag$") &filters.user(618260788))
 def tag_all(client,message):
     text=" بیدار شوید و از زیر اب خارج شوید \n همانا خداوند فرمود : زیر ابیان گنهکارند😁 \n"
-    members=app.get_chat_members("chat_azad_0021_com")
+    members=app.get_chat_members(f"{message.chat.id}")
     for member in members:
         text+=f"[{member.user.first_name}](tg://user?id={member.user.id}) , "
     message.reply(text) 
 
-@app.on_message(filters.group & filters.regex("^(p|P)in$"))
+@app.on_message(filters.group & filters.regex("^(p|P)in$") &filters.user(618260788))
 def pin_message(client,message):
     client.pin_chat_message(chat_id=message.chat.id,message_id=message.reply_to_message.message_id)
     message.reply("✅")
 
-# @app.on_message(filters.group & filters.regex("^(b|B)an$"))
-# def ban_user(client,message):
-#     Client.ban_chat_member(chat_id=message.chat.id,user_id=message.reply_to_message.from_user.id)
-#     message.reply("✅")
+@app.on_message(filters.group & filters.regex("^(b|B)an$") &filters.user(618260788))
+def ban_user(client,message):
+    id=message.reply_to_message.from_user.id
+    message.chat.kick_member(id)
+    message.reply("✅")
 
+@app.on_message(filters.group  & filters.regex("^(d|D)el ") &filters.user(618260788))
+def delete(client,message):
+    target=message.chat.id
+    limit=int(message.text[4:])
+    for i in app.iter_history(target,limit=limit):
+        client.delete_messages(target,i.message_id)
+    
 app.run()
