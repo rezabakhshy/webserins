@@ -1,6 +1,4 @@
-from http import client
-from msilib.schema import Class
-from tkinter.filedialog import Open
+
 from pyrogram import Client,filters
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
