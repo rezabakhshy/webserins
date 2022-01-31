@@ -31,14 +31,15 @@ def find_message(text):
     en=0
     sr=0
     for line in file:
-        st=line.find(text,sr)
-        s=len(text)
-        en=line.find("\n",st)
-        tex=line[st+s:en]
-        if text==tex:
-            return tex
-        else:
-            sr=en
+        if text in line:
+            st=line.find(text,sr)
+            s=len(text)
+            en=line.find("\n",st)
+            tex=line[st+s:en]
+            if text==tex:
+                return tex
+            else:
+                sr=en
     return "n"
 
 @app.on_message(filters.command("start","/") & filters.private )
@@ -113,12 +114,11 @@ def list_kalamat(client,message):
 
 @app.on_message(filters.group&filters.text)
 def defulte_answer(client,message):
-    txt=message.text
-    for text in txt.split():
-        answer=find_message(text)
-        if answer=="n":
-            pass
-        else:
-            message.reply(answer)
+    text=message.text
+    answer=find_message(text)
+    if answer=="n":
+        pass
+    else:
+        message.reply(answer)
 
 app.run()
