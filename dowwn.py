@@ -29,7 +29,7 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
     for line in file:
-        if text == line.split()[0]:
+        if text in line.split()[0]:
             st=line.find(text)
             s=line.find("|")
             en=line.find("\n",st)
