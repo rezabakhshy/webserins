@@ -29,9 +29,10 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
     for line in file:
-        if text in line.split()[0]:
-            st=line.find(text)
-            s=line.find("|")
+        st=line.find(text)
+        s=line.find("|")
+        te=line[:s]
+        if text == te:
             en=line.find("\n",st)
             tex=line[s+1:en]
             return tex
@@ -87,10 +88,16 @@ def add_text(client,message):
     txt=str(message.text)
     f=txt[:4]
     text=txt.replace(f,"")
+    tx=""
+    for i in text:
+        if i!=" ":
+            tx+=i
+        else:
+            tx+="_"
     # mass=text.split()[0]
     # ans=text.replace(mass,"")
     file=open("defult_answer.text","a",encoding="UTF-8")
-    file.write(text+"\n")
+    file.write(tx+"\n")
     file.close()
     message.reply("ممنونم ازت دوست عزیزم که بهم کلمه یاد میدیی😍😍❤️")
 
@@ -100,18 +107,42 @@ def list_kalamat(client,message):
     text=""
     for line in file:
         fin=line.find("|")
-        kalame=line[:fin]
+        kalam=line[:fin]
+        kalame=""
+        for i in kalam:
+            if i!="_":
+                kalame+=i
+            else:
+                kalame+=" "
         javab=line[fin+1:]
-        text+=f"📝📘**kalame:** {kalame}\n->{javab}\n---------------------------------\n"
+        javabe=""
+        for i in javab:
+            if i!="_":
+                javabe+=i
+            else:
+                javabe+=" "
+        text+=f"📝📘**kalame:** {kalame}\n->{javabe}\n---------------------------------\n"
     message.reply(text)
 
 @app.on_message(filters.group&filters.text)
 def defulte_answer(client,message):
     text=message.text
-    answer=find_message(text)
+    kalame=""
+    for i in text:
+        if i!=" ":
+            kalame+=i
+        else:
+            kalame+="_"
+    answer=find_message(kalame)
+    ans=""
+    for i in answer:
+        if i!="_":
+            ans+=i
+        else:
+            ans+=" "
     if answer=="n":
         pass
     else:
-        message.reply(answer)
+        message.reply(ans)
 
 app.run()
