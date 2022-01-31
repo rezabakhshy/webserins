@@ -33,7 +33,8 @@ def find_message(text):
     for line in file:
         if text in line.split()[0]:
             sr=random.randint(0,len(red))
-            while sr==-1:
+            st=line.find(text,sr)
+            while st==-1:
                 sr=random.randint(0,len(red))
                 st=line.find(text,sr)
             s=line.find("|")
