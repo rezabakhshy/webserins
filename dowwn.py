@@ -7,7 +7,7 @@ app=Client("my_bot",api_id=api_id,api_hash=api_hash,bot_token=bot_token)
 START="""سلام من به تو ای جیگرگوشه بابات 😁\nمن هنوز تازه ساخته شدم و زیاد فضولی نمیکنم\nولی اگه دوس داشته باشی میتونی تو کانالم عضو بشی و دوستاتم عضو کنی تا وقتی موقش برسه شرو به فعالیت کنیم و شما هم لذت ببری \n@learning_programing_language"""
 NOTEXIS="""oops..\nyour not joined to my chanel\nplease join and so send /start\nmy chanel: @learning_programing_language"""
 EXIS="""WELCOME FRIND.\ni'm moving.\nthanks for start me."""
-PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> add (kalame)|(javab)\n-> Add (kalame)|(javab)\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
+PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> add (kalame)|(javab)\n-> Add (kalame)|(javab)\n**📝📘لیست کلمه هایی که یاد دارم و نشون میدم به دستور سازنده📝📘**\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
 #-------------------------------------------------------------------------------------------------------------
 # def user():
 #     file=open("user.txt","w+")
@@ -28,6 +28,7 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 
 def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
+    en=0
     for line in file:
         if text in line:
             st=line.find(text)
@@ -35,6 +36,11 @@ def find_message(text):
             en=line.find("\n",st)
             tex=line[st+s:en]
             return tex
+        else:
+            st=line.find(text)
+            s=len(text)
+            en=line.find("\n",st) 
+            st=en
     return "n"
 
 @app.on_message(filters.command("start","/") & filters.private )
@@ -77,7 +83,7 @@ def ban_user(client,message):
     message.chat.kick_member(id)
     message.reply("✅")
 
-@app.on_message(filters.group  & filters.regex("(p|P)anel$")&filters.user(618260788))
+@app.on_message(filters.group  & filters.regex("^(p|P)anel$")&filters.user(618260788))
 def panel(client,message):
     message.reply(PANEL)
 
@@ -95,7 +101,17 @@ def add_text(client,message):
     file=open("defult_answer.text","a",encoding="UTF-8")
     file.write(mass+" "+ans+"\n")
     file.close()
-    message.reply("✅")
+    message.reply("ممنونم ازت دوست عزیزم که بهم کلمه یاد میدیی😍😍❤️")
+
+@app.on_message(filters.group&filters.regex("^(l|L)ist$")&filters.user(618260788))
+def list_kalamat(client,message):
+    file=open("defult_answer.text","r",encoding="UTF-8")
+    text=""
+    for line in file:
+        kalame=line.split()[0]
+        javab=line.replace(kalame,"")
+        text+=f"📝📘**kalame:** {kalame}\n->{javab}\n---------------------------------\n"
+    message.reply(text)
 
 @app.on_message(filters.group&filters.all)
 def defulte_answer(client,message):
