@@ -28,18 +28,13 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 
 def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
-    en=0
-    sr=0
     for line in file:
         if text in line.split()[0]:
-            st=line.find(text,sr)
-            s=len(text)
+            st=line.find(text)
+            s=line.find("|")
             en=line.find("\n",st)
-            tex=line[st+s:en]
+            tex=line[s+1:en]
             return tex
-        else:
-            sr=en
-
     return "n"
 
 @app.on_message(filters.command("start","/") & filters.private )
@@ -92,13 +87,10 @@ def add_text(client,message):
     txt=str(message.text)
     f=txt[:4]
     text=txt.replace(f,"")
-    fin=text.find("|")
-    mass=text[:fin]
-    ans=text[fin+1:]
     # mass=text.split()[0]
     # ans=text.replace(mass,"")
     file=open("defult_answer.text","a",encoding="UTF-8")
-    file.write(mass+" "+ans+"\n")
+    file.write(text+"\n")
     file.close()
     message.reply("ممنونم ازت دوست عزیزم که بهم کلمه یاد میدیی😍😍❤️")
 
@@ -107,8 +99,9 @@ def list_kalamat(client,message):
     file=open("defult_answer.text","r",encoding="UTF-8")
     text=""
     for line in file:
-        kalame=line.split()[0]
-        javab=line.replace(kalame,"")
+        fin=line.find("|")
+        kalame=line[:fin]
+        javab=line[fin+1:]
         text+=f"📝📘**kalame:** {kalame}\n->{javab}\n---------------------------------\n"
     message.reply(text)
 
