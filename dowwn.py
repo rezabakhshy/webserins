@@ -1,4 +1,5 @@
-from pyrogram import Client,filters
+
+from pyrogram import Client,filters,errors
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
@@ -112,12 +113,15 @@ def list_kalamat(client,message):
     message.reply(text)
 
 @app.on_message(filters.group&filters.text)
-def defulte_answer(client,message):
-    text=message.text
-    answer=find_message(text)
-    if answer=="n":
-        pass
-    else:
-        message.reply(answer)
+try:
+    def defulte_answer(client,message):
+        text=message.text
+        answer=find_message(text)
+        if answer=="n":
+            pass
+        else:
+            message.reply(answer)
+except errors as a:
+    app.reply("ops: "+str(a))
 
 app.run()
