@@ -7,6 +7,7 @@ app=Client("my_bot",api_id=api_id,api_hash=api_hash,bot_token=bot_token)
 START="""سلام من به تو ای جیگرگوشه بابات 😁\nمن هنوز تازه ساخته شدم و زیاد فضولی نمیکنم\nولی اگه دوس داشته باشی میتونی تو کانالم عضو بشی و دوستاتم عضو کنی تا وقتی موقش برسه شرو به فعالیت کنیم و شما هم لذت ببری \n@learning_programing_language"""
 NOTEXIS="""oops..\nyour not joined to my chanel\nplease join and so send /start\nmy chanel: @learning_programing_language"""
 EXIS="""WELCOME FRIND.\ni'm moving.\nthanks for start me."""
+PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> add (kalame)|(javab)\n-> Add (kalame)|(javab)\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
 #-------------------------------------------------------------------------------------------------------------
 # def user():
 #     file=open("user.txt","w+")
@@ -76,8 +77,13 @@ def ban_user(client,message):
     message.chat.kick_member(id)
     message.reply("✅")
 
-@app.on_message(filters.group  & filters.regex("^(a|A)dd ") &filters.user(618260788))
-def delete(client,message):
+@app.on_message(filters.group  & filters.regex("(p|P)anel$"))
+def panel(client,message):
+    message.reply(PANEL)
+
+
+@app.on_message(filters.group  & filters.regex("^(a|A)dd ")&filters.user(618260788))
+def add_text(client,message):
     txt=str(message.text)
     f=txt[:4]
     text=txt.replace(f,"")
