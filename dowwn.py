@@ -25,6 +25,17 @@ EXIS="""WELCOME FRIND.\ni'm moving.\nthanks for start me."""
 # def main(client,message):
 #     client.send_message(chat_id=message.chat.id,text=EXIS,reply_to_message_id=message.message_id)
 
+def find_message(text):
+    file=open("defult_answer.text","r",encoding="UTF-8")
+    for line in file:
+        if text in line:
+            st=line.find(text)
+            s=len(text)
+            en=line.find("\n",st)
+            tex=line[st+s:en]
+            return tex
+    return "n"
+
 @app.on_message(filters.command("start","/") & filters.private )
 def echo(client, message):
     client.send_message(chat_id=message.chat.id,text=START,reply_to_message_id=message.message_id)
@@ -65,11 +76,28 @@ def ban_user(client,message):
     message.chat.kick_member(id)
     message.reply("✅")
 
-@app.on_message(filters.group  & filters.regex("^(d|D)el ") &filters.user(618260788))
+@app.on_message(filters.group  & filters.regex("^(a|A)dd ") &filters.user(618260788))
 def delete(client,message):
-    target=message.chat.id
-    limit=int(message.text[4:])
-    for i in app.iter_history(target,limit=limit):
-        client.delete_messages(target,i.message_id)
-    
+    txt=str(message.text)
+    f=txt[:4]
+    text=txt.replace(f,"")
+    fin=text.find("|")
+    mass=text[:fin]
+    ans=text[fin+1:]
+    # mass=text.split()[0]
+    # ans=text.replace(mass,"")
+    file=open("defult_answer.text","a",encoding="UTF-8")
+    file.write(mass+" "+ans+"\n")
+    file.close()
+    message.reply("✅")
+
+@app.on_message(filters.group&filters.all)
+def defulte_answer(client,message):
+    text=message.text
+    answer=find_message(text)
+    if answer=="n":
+        pass
+    else:
+        message.reply(answer)
+
 app.run()
