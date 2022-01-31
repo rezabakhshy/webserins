@@ -29,11 +29,12 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 
 def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
+    red=file.read()
     for line in file:
         if text in line.split()[0]:
-            sr=random.randint(0,len(file))
+            sr=random.randint(0,len(red))
             while sr==-1:
-                sr=random.randint(0,len(file))
+                sr=random.randint(0,len(red))
                 st=line.find(text,sr)
             s=line.find("|")
             en=line.find("\n",st)
