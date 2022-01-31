@@ -29,18 +29,16 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
     en=0
+    sr=0
     for line in file:
-        if text in line:
-            st=line.find(text)
-            s=len(text)
-            en=line.find("\n",st)
-            tex=line[st+s:en]
+        st=line.find(text,sr)
+        s=len(text)
+        en=line.find("\n",st)
+        tex=line[st+s:en]
+        if text==tex:
             return tex
         else:
-            st=line.find(text)
-            s=len(text)
-            en=line.find("\n",st) 
-            st=en
+            sr=en
     return "n"
 
 @app.on_message(filters.command("start","/") & filters.private )
@@ -113,7 +111,7 @@ def list_kalamat(client,message):
         text+=f"📝📘**kalame:** {kalame}\n->{javab}\n---------------------------------\n"
     message.reply(text)
 
-@app.on_message(filters.group&filters.all)
+@app.on_message(filters.group&filters.text)
 def defulte_answer(client,message):
     txt=message.text
     for text in txt.split():
