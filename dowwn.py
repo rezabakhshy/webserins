@@ -1,4 +1,5 @@
 from pyrogram import Client,filters
+import random
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
@@ -30,7 +31,10 @@ def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
     for line in file:
         if text in line.split()[0]:
-            st=line.find(text)
+            sr=random.randint(0,len(file))
+            while sr==-1:
+                sr=random.randint(0,len(file))
+                st=line.find(text,sr)
             s=line.find("|")
             en=line.find("\n",st)
             tex=line[s+1:en]
