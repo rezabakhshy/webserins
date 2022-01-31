@@ -77,12 +77,12 @@ def ban_user(client,message):
     message.chat.kick_member(id)
     message.reply("✅")
 
-@app.on_message(filters.group  & filters.regex("(p|P)anel$"))
+@app.on_message(filters.group  & filters.regex("(p|P)anel$")&filters.user(618260788))
 def panel(client,message):
     message.reply(PANEL)
 
 
-@app.on_message(filters.group  & filters.regex("^(a|A)dd ")&filters.user(618260788))
+@app.on_message(filters.group  & filters.regex("^(a|A)dd "))
 def add_text(client,message):
     txt=str(message.text)
     f=txt[:4]
@@ -99,11 +99,12 @@ def add_text(client,message):
 
 @app.on_message(filters.group&filters.all)
 def defulte_answer(client,message):
-    text=message.text
-    answer=find_message(text)
-    if answer=="n":
-        pass
-    else:
-        message.reply(answer)
+    txt=message.text
+    for text in txt.split():
+        answer=find_message(text)
+        if answer=="n":
+            pass
+        else:
+            message.reply(answer)
 
 app.run()
