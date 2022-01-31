@@ -28,17 +28,14 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 
 def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
-    en=0
-    sr=0
     for line in file:
-        st=line.find(text,sr)
-        s=len(text)
-        en=line.find("\n",st)
-        tex=line[st+s:en]
-        if text==tex:
+        if text in line.split()[0]:
+            st=line.find(text,sr)
+            s=len(text)
+            en=line.find("\n",st)
+            tex=line[st+s:en]
             return tex
-        else:
-            sr=en
+
     return "n"
 
 @app.on_message(filters.command("start","/") & filters.private )
