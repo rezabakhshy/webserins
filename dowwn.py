@@ -1,5 +1,4 @@
 from pyrogram import Client,filters
-import random
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
@@ -29,14 +28,9 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 
 def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
-    red=file.read()
     for line in file:
-        if text in line.split()[0]:
-            sr=random.randint(0,len(red))
-            st=line.find(text,sr)
-            while st==-1:
-                sr=random.randint(0,len(red))
-                st=line.find(text,sr)
+        if text == line.split()[0]:
+            st=line.find(text)
             s=line.find("|")
             en=line.find("\n",st)
             tex=line[s+1:en]
