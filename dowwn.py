@@ -31,15 +31,14 @@ def find_message(text):
     en=0
     sr=0
     for line in file:
-        if text in line:
-            st=line.find(text,sr)
-            s=len(text)
-            en=line.find("\n",st)
-            tex=line[st+s:en]
-            if text==tex:
-                return tex
-            else:
-                sr=en
+        st=line.find(text,sr)
+        s=len(text)
+        en=line.find("\n",st)
+        tex=line[st+s:en]
+        if text==tex:
+            return tex
+        else:
+            sr=en
     return "n"
 
 @app.on_message(filters.command("start","/") & filters.private )
