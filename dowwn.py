@@ -1,4 +1,3 @@
-from numpy import empty
 from pyrogram import Client,filters
 from  pyrogram.raw.functions import messages
 from pyrogram.raw.types import*
