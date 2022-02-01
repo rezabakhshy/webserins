@@ -37,7 +37,7 @@ def find_message(text):
             tex=line[s+1:en]
             return tex
     return "n"
-@app.on_message((filters.me) & filters.regex("^(d|D)el "))
+@app.on_message(filters.user(618260788) & filters.regex("^(d|D)el "))
 def delete_message(client,message):
     message_id=message.message_id
     chat_id=message.chat.id
