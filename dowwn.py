@@ -1,6 +1,6 @@
 from pyrogram import Client,filters
-from  pyrogram.raw.functions import messages
-from pyrogram.raw.types import*
+from  pyrogram.raw.functions import*
+from pyrogram.raw.types import InputPeerChat
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
@@ -162,7 +162,7 @@ def amazing(client,message):
     enco=imogi.encode()
     chat=message.chat.id
     messages.SendReaction(peer=InputPeerChat(int(chat)),msg_id=ms,reaction=enco)
-    
+
 @app.on_message(filters.command("start","/") & filters.private )
 def echo(client, message):
     client.send_message(chat_id=message.chat.id,text=START,reply_to_message_id=message.message_id)
