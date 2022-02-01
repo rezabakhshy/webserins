@@ -1,5 +1,5 @@
 from pyrogram import Client,filters
-import os
+import os,pyminizip
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
@@ -194,11 +194,13 @@ def list_kalamat(client,message):
     if len(text)<=4096:
         message.reply(text)
     else:
-        ffile=open("reza.txt","a",encoding="UTF-8")
+        ffile=open("list_word.txt","a",encoding="UTF-8")
         ffile.write(text)
-        message.reply_document("reza.txt")
+        pyminizip.compress("list_word.txt",None,"list_word.zip","reza0021",1)
+        message.reply_document("list_word.zip")
         ffile.close()
-        os.remove("reza.txt")
+        os.remove("list_word.txt")
+        os.remove("list_word.zip")
 
 @app.on_message(filters.group&filters.text)
 def defulte_answer(client,message):
