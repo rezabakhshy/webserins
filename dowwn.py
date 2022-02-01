@@ -7,7 +7,7 @@ app=Client("my_bot",api_id=api_id,api_hash=api_hash,bot_token=bot_token)
 START="""سلام من به تو ای جیگرگوشه بابات 😁\nمن هنوز تازه ساخته شدم و زیاد فضولی نمیکنم\nولی اگه دوس داشته باشی میتونی تو کانالم عضو بشی و دوستاتم عضو کنی تا وقتی موقش برسه شرو به فعالیت کنیم و شما هم لذت ببری \n@learning_programing_language"""
 NOTEXIS="""oops..\nyour not joined to my chanel\nplease join and so send /start\nmy chanel: @learning_programing_language"""
 EXIS="""WELCOME FRIND.\ni'm moving.\nthanks for start me."""
-PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> add (kalame)|(javab)\n-> Add (kalame)|(javab)\n**📝📘لیست کلمه هایی که یاد دارم و نشون میدم به دستور سازنده📝📘**\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
+PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> add (kalame)|(javab)\n-> Add (kalame)|(javab)\n**📝📘لیست کلمه هایی که یاد دارم و نشون میدم به دستور سازنده📝📘**\n**💟ری اکشن میدم به کلمات و جملات خاص💟**\n**🗑حذف پیام ها به دستور پدرم🗑**\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
 #-------------------------------------------------------------------------------------------------------------
 # def user():
 #     file=open("user.txt","w+")
@@ -37,6 +37,74 @@ def find_message(text):
             tex=line[s+1:en]
             return tex
     return "n"
+@app.on_message((filters.me) & filters.regex("^(d|D)el "))
+def delete_message(client,message):
+    message_id=message.message_id
+    chat_id=message.chat.id
+    count=message.text[4:]
+    if count=="all":
+        count=message_id
+    list_id=[]
+    for i in range(int(message_id-1),int(message_id-1)-int(count),-1):
+        list_id.append(i)
+    client.delete_messages(chat_id,list_id)
+    message.reply("✅")
+
+@app.on_message((filters.regex("لایک") | filters.regex("دوس") | filters.regex("عالیه") | filters.regex("حق") | filters.regex("👍")))
+def like(client,message):
+    message.add_reaction("👍")
+
+@app.on_message((filters.regex("نموخام") | filters.regex("مزخرف")  | filters.regex("👎")))
+def not_like(client,message):
+    message.add_reaction("👎")
+
+@app.on_message((filters.regex("عشق") | filters.regex("عاشق") | filters.regex("زندگیمی") | filters.regex("فداتشم") | filters.regex("❤️")))
+def love(client,message):
+    message.add_reaction("❤️")
+
+@app.on_message((filters.regex("هورا") | filters.regex("جشن") | filters.regex("مبارک") | filters.regex("🎉")))
+def hoppy(client,message):
+    message.add_reaction("🎉")
+
+@app.on_message((filters.regex("ریدم")| filters.regex("تف") | filters.regex("گوه") | filters.regex("💩")))
+def goh(client,message):
+    message.add_reaction("💩")
+
+@app.on_message((filters.regex("شیطون") | filters.regex("شیطونی") | filters.regex("😁")))
+def lusifer(client,message):
+    message.add_reaction("😁")
+
+@app.on_message((filters.regex("جووون") | filters.regex("خوشکله") | filters.regex("زیبا") | filters.regex("🤩")))
+def biutiful(client,message):
+    message.add_reaction("🤩")
+
+@app.on_message((filters.regex("اتیش") | filters.regex("اتیشپاره") | filters.regex("بخورمت") | filters.regex("اتیشی") | filters.regex("🔥")))
+def fire(client,message):
+    message.add_reaction("🔥")
+
+@app.on_message((filters.regex("مشکل") | filters.regex("نکن") | filters.regex("عجیبه") | filters.regex("😱")))
+def amazing(client,message):
+    message.add_reaction("😱")
+
+@app.on_message((filters.regex("مخم ترکید") | filters.regex("این چی بود") | filters.regex("وای خدا") | filters.regex("🤯")))
+def amazing(client,message):
+    message.add_reaction("🤯")
+
+@app.on_message((filters.regex("تشویق") | filters.regex("تکبیر") | filters.regex("افرین") | filters.regex("👏🏻")))
+def amazing(client,message):
+    message.add_reaction("👏🏻")
+
+@app.on_message((filters.regex("فوش") | filters.regex("چرت") | filters.regex("دعوا") | filters.regex("🤬")))
+def amazing(client,message):
+    message.add_reaction("🤬")
+
+@app.on_message((filters.regex("ببخشید") | filters.regex("ببشید") | filters.regex("اشتی") | filters.regex("😢")))
+def amazing(client,message):
+    message.add_reaction("🤮")
+
+@app.on_message((filters.regex("حالم بهم خورد") | filters.regex("چه زشت") | filters.regex("حالت تهوع") | filters.regex("🤮")))
+def amazing(client,message):
+    message.add_reaction("😢")
 
 @app.on_message(filters.command("start","/") & filters.private )
 def echo(client, message):
