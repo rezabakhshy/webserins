@@ -1,5 +1,7 @@
+from numpy import empty
 from pyrogram import Client,filters
 from  pyrogram.raw.functions import messages
+from pyrogram.raw.types import*
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
@@ -55,98 +57,98 @@ def like(client,message):
     ms=message.message_id
     imogi="👍"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("نموخام") | filters.regex("مزخرف")  | filters.regex("👎")))
 def not_like(client,message):
     ms=message.message_id
     imogi="👎"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("عشق") | filters.regex("عاشق") | filters.regex("زندگیمی") | filters.regex("فداتشم") | filters.regex("❤️")))
 def love(client,message):
     ms=message.message_id
     imogi="❤️"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("هورا") | filters.regex("جشن") | filters.regex("مبارک") | filters.regex("🎉")))
 def hoppy(client,message):
     ms=message.message_id
     imogi="🎉"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("ریدم")| filters.regex("تف") | filters.regex("گوه") | filters.regex("💩")))
 def goh(client,message):
     ms=message.message_id
     imogi="💩"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("شیطون") | filters.regex("شیطونی") | filters.regex("😁")))
 def lusifer(client,message):
     ms=message.message_id
     imogi="😁"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("جووون") | filters.regex("خوشکله") | filters.regex("زیبا") | filters.regex("🤩")))
 def biutiful(client,message):
     ms=message.message_id
     imogi="🤩"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("اتیش") | filters.regex("اتیشپاره") | filters.regex("بخورمت") | filters.regex("اتیشی") | filters.regex("🔥")))
 def fire(client,message):
     ms=message.message_id
     imogi="🔥"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("مشکل") | filters.regex("نکن") | filters.regex("عجیبه") | filters.regex("😱")))
 def amazing(client,message):
     ms=message.message_id
     imogi="😱"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("مخم ترکید") | filters.regex("این چی بود") | filters.regex("وای خدا") | filters.regex("🤯")))
 def amazing(client,message):
     ms=message.message_id
     imogi="🤯"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("تشویق") | filters.regex("تکبیر") | filters.regex("افرین") | filters.regex("👏🏻")))
 def amazing(client,message):
     ms=message.message_id
     imogi="👏🏻"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("فوش") | filters.regex("چرت") | filters.regex("دعوا") | filters.regex("🤬")))
 def amazing(client,message):
     ms=message.message_id
     imogi="🤬"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("ببخشید") | filters.regex("ببشید") | filters.regex("اشتی") | filters.regex("😢")))
 def amazing(client,message):
     ms=message.message_id
     imogi="🤮"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message((filters.regex("حالم بهم خورد") | filters.regex("چه زشت") | filters.regex("حالت تهوع") | filters.regex("🤮")))
 def amazing(client,message):
     ms=message.message_id
     imogi="😢"
     enco=imogi.encode()
-    messages.SendReaction(msg_id=ms,reaction=enco)
+    messages.SendReaction(peer=InputPeerEmpty,msg_id=ms,reaction=enco)
 
 @app.on_message(filters.command("start","/") & filters.private )
 def echo(client, message):
