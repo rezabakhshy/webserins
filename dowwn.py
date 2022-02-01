@@ -26,7 +26,7 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 # def main(client,message):
 #     client.send_message(chat_id=message.chat.id,text=EXIS,reply_to_message_id=message.message_id)
 
-async def find_message(text):
+def find_message(text):
     file=open("defult_answer.text","r",encoding="UTF-8")
     for line in file:
         st=line.find(text)
