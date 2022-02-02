@@ -6,8 +6,7 @@ api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
 app=Client("my_bot",api_id=api_id,api_hash=api_hash,bot_token=bot_token)
 #-------------------------------------------------------------------------------------------------------------
-START="""
-سلام سلام \nخوش اومدی \n😍من hero هستم\nاگه میخای با قابلیت های من اشنا بشی منو تو گروهت ادد و بعد از اون ادمینم کن😍😎\nبزن بریم🏃🏻‍♂️ \n@learning_programing_language"""
+START="""سلام سلام \nخوش اومدی \n😍من hero هستم\nاگه میخای با قابلیت های من اشنا بشی منو تو گروهت ادد و بعد از اون ادمینم کن😍😎\nبزن بریم🏃🏻‍♂️ \n\n\nیه سوپرایز برات دارم 🥳\nاگه میخوای که برنامه نویسی کامپیوتر یاد بگیری 😍همین الان تو چنلم جوین شو😍🤩\n@learning_programing_language"""
 NOTEXIS="""oops..\nyour not joined to my chanel\nplease join and so send /start\nmy chanel: @learning_programing_language"""
 EXIS="""WELCOME FRIND.\ni'm moving.\nthanks for start me."""
 PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> tadd (kalame)|(javab)\n-> Tadd (kalame)|(javab)\n**☃️ادد کردن استیکر برای پاسخ گویی از طرف ربات:**\nریپلی کردن استیکر و سپس تایپ این دو دستور\n->sadd\n->Sadd\n**📝📘لیست استیکر هایی که برای پاسخ گویی دارم و نشون میدم به دستور سازنده📝📘**\n\n**📝📘لیست کلمه هایی که یاد دارم و نشون میدم به دستور سازنده📝📘**\n**🗑حذف پیام ها به دستور پدرم🗑**\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n\n**🧷📌برداشتن پیام سنجاق شده توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
@@ -57,19 +56,9 @@ def del_anderline():
     for line in file:
         fin=line.find("|")
         kalam=line[:fin]
-        kalame=""
-        for i in kalam:
-            if i!="_":
-                kalame+=i
-            else:
-                kalame+=" "
+        kalame=kalam.replace("_"," ")
         javab=line[fin+1:]
-        javabe=""
-        for i in javab:
-            if i!="_":
-                javabe+=i
-            else:
-                javabe+=" "
+        javabe=javab.replace("_"," ")
         text+=f"📝📘**kalame:** {kalame}\n->{javabe}\n---------------------------------\n"
     file.close()
     return text
@@ -147,11 +136,22 @@ def new_member(client,message):
     fon_id=name.find(",",fin_id)
     id=name[fin_id+3:fon_id]
     id=id.replace("'","")
-    message.reply(f" سلام \nخوش اومدی [{na}](tg://user?id={int(id)})\nاز قوانین گروه پیروی کن تا مدیر ناراحت نشه😁")
+    if id=="5102000083":
+        pass
+    else:
+        message.reply(f" سلام \nخوش اومدی [{na}](tg://user?id={int(id)})\nاز قوانین گروه پیروی کن تا مدیر ناراحت نشه😁")
 
 @app.on_message(filters.group & filters.left_chat_member)
 def left_member(client,message):
-    message.reply("به درودی یا حق")
+    list_left=["به درود یا حق","خوب شد که رفت","کجا میری بیتربیت منو تنها میزاری","نرووووووووو دل من به بودنت خوشه"]
+    list_remove=["خوب شد بیرونش کردی بیتربیتو","از اولم منو دوس نداشت","ماییم و نوای بینوایی * بسمل که اگر حریف مایی"]
+    if message.left_chat_member:
+        index=random.randint(0,len(list_left)-1)
+        message.reply(list_left[index])
+    else:
+        index=random.randint(0,len(list_remove)-1)
+        message.reply(list_remove[index])
+
 @app.on_message(filters.group & filters.regex("^(t|T)ag$") &filters.user(618260788))
 def tag_all(client,message):
     list=[" بیدار شوید و از زیر اب خارج شوید \n همانا خداوند فرمود : زیر ابیان گنهکارند😁 \n","تو را به سمفونی شماره پنج بتهوون قسم بیا ببین این چی میگه"]
@@ -205,12 +205,7 @@ def add_text(client,message):
     txt=str(message.text)
     f=txt[:5]
     text=txt.replace(f,"")
-    tx=""
-    for i in text:
-        if i!=" ":
-            tx+=i
-        else:
-            tx+="_"
+    tx=text.replace(" ","_")
     # mass=text.split()[0]
     # ans=text.replace(mass,"")
     file=open("defult_answer.text","a",encoding="UTF-8")
@@ -233,20 +228,10 @@ def list_kalamat(client,message):
 
 @app.on_message(filters.group&filters.text)
 def defulte_answer(client,message):
-    text=message.text
-    kalame=""
-    for i in text:
-        if i!=" ":
-            kalame+=i
-        else:
-            kalame+="_"
+    text=str(message.text)
+    kalame=text.replace(" ","_")
     answer=find_message(kalame)
-    ans=""
-    for i in answer:
-        if i!="_":
-            ans+=i
-        else:
-            ans+=" "
+    ans=answer.replace("_"," ")
     if answer=="n":
         pass
     else:
