@@ -36,7 +36,7 @@ def find_message(text):
         if text == te:
             en=line.find("\n",st)
             list.append(line[s+1:en])
-    
+    file.close()
     size=len(list)
     if size!=0:
         rand=random.randint(0,size-1)
@@ -93,7 +93,7 @@ def ech_sticker(client,message):
     if stic!="n":
         message.reply_sticker(stic)
 
-@app.on_message(filters.user(618260788) & filters.regex("^(s|S)add$"))
+@app.on_message(filters.group & filters.regex("^(s|S)add$"))
 def add_sticker(client,message):
     if message.reply_to_message.sticker:
         file=open("sticker.txt","a",encoding="UTF-8")
@@ -176,7 +176,7 @@ def panel(client,message):
 @app.on_message(filters.group  & filters.regex("^(t|T)add "))
 def add_text(client,message):
     txt=str(message.text)
-    f=txt[:4]
+    f=txt[:5]
     text=txt.replace(f,"")
     tx=""
     for i in text:
