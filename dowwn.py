@@ -66,11 +66,6 @@ def del_anderline():
     file.close()
     return text
 
-@app.on_message(filters.group)
-def administrator(client,message):
-    me=client.get_chat(message.chat.id)
-    message.reply(me)
-
 @app.on_message(filters.group&filters.sticker)
 def ech_sticker(client,message):
     id=message.sticker.file_id
