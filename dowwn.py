@@ -1,5 +1,5 @@
 from pyrogram import Client,filters
-import os,pyminizip
+import os,pyminizip,random
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
@@ -66,10 +66,32 @@ def del_anderline():
     file.close()
     return text
 
-@app.on_message(filters.group&filters.sticker)
+def imogis(imogi):
+    file=open("sticker.txt","r",encoding="UTF-8")
+    list=[]
+    for line in file:
+        if imogi in line:
+            img=line[2:]
+            img=img.replace("\n","")
+            list.append(img)
+    size=len(list)
+    if size==0:
+        return "n"
+    else:
+        rand=random.randint(1,size)
+        return list[rand]
+
+@app.on_message(filters.group&(filters.sticker | filters.text))
 def ech_sticker(client,message):
-    id=message.sticker.file_id
-    message.reply_sticker(str(id))
+    if message.sticker:
+        stic=imogis(message.sticker.emoji)
+        if stic!="n":
+            message.reply_sticker(stic)
+    else:
+        stic=imogis(message.text)
+        if stic!="n":
+            message.reply_sticker(stic)
+            
 @app.on_message(filters.user(618260788) & filters.regex("^(d|D)el "))
 def delete_message(client,message):
     message_id=message.message_id
