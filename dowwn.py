@@ -6,7 +6,7 @@ api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
 app=Client("my_bot",api_id=api_id,api_hash=api_hash,bot_token=bot_token)
 #-------------------------------------------------------------------------------------------------------------
-START="""سلام من به تو ای جیگرگوشه بابات 😁\nمن هنوز تازه ساخته شدم و زیاد فضولی نمیکنم\nولی اگه دوس داشته باشی میتونی تو کانالم عضو بشی و دوستاتم عضو کنی تا وقتی موقش برسه شرو به فعالیت کنیم و شما هم لذت ببری \n@learning_programing_language"""
+START="""سلام سلام \nخوش اومدی \n😍من hero هستم\nاگه میخای با قابلیت های من اشنا بشی منو تو گروهت ادد و بعد از اون ادمینم کن😍😎\nبزن بریم🏃🏻‍♂️ \n@learning_programing_language"""
 NOTEXIS="""oops..\nyour not joined to my chanel\nplease join and so send /start\nmy chanel: @learning_programing_language"""
 EXIS="""WELCOME FRIND.\ni'm moving.\nthanks for start me."""
 PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> tadd (kalame)|(javab)\n-> Tadd (kalame)|(javab)\n**☃️ادد کردن استیکر برای پاسخ گویی از طرف ربات:**\nریپلی کردن استیکر و سپس تایپ این دو دستور\n->sadd\n->Sadd\n**📝📘لیست استیکر هایی که برای پاسخ گویی دارم و نشون میدم به دستور سازنده📝📘**\n\n**📝📘لیست کلمه هایی که یاد دارم و نشون میدم به دستور سازنده📝📘**\n**🗑حذف پیام ها به دستور پدرم🗑**\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n\n**🧷📌برداشتن پیام سنجاق شده توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
@@ -137,9 +137,8 @@ def main(client, message):
 
 @app.on_message(filters.group & filters.new_chat_members)
 def new_member(client,message):
-    name=message.from_user.first_name
-    message.reply(f"سلام سلام \nخوش اومدی [{name}](tg://user?id={message.from_user.id})\n😍من hero هستم\nاگه میخای با قابلیت های من اشنا بشی منو تو گروهت ادد و بعد از اون ادمینم کن😍😎\nبزن بریم🏃🏻‍♂️")
-    print(message)
+    name=message.new_chat_members.first_name
+    message.reply(f" سلام \nخوش اومدی [{name}](tg://user?id={message.new_chat_members.id})\nاز قوانین گروه پیروی کن تا مدیر ناراحت نشهگنهکارند😁")
 
 @app.on_message(filters.group & filters.regex("^(t|T)ag$") &filters.user(618260788))
 def tag_all(client,message):
@@ -155,17 +154,18 @@ def tag_all(client,message):
         text+=f"{tex}\n[{member.user.first_name}](tg://user?id={member.user.id}) , "
     message.reply(text) 
 
-@app.on_message(filters.group & filters.regex("^(s|S)ilent ") &filters.user(618260788))
-def ChatPermis(client,message):
-    if message.reply_to_message:
-        tim=str(message.text)[7:]
-        id=message.reply_to_message.from_user.id
-        client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(60*tim)))
-    else:
-        text=str(message.text)[7:]
-        id=text.split()[0]
-        tim=text.replace(id,"")
-        client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(30*tim)))
+# @app.on_message(filters.group & filters.regex("^(s|S)ilent ") &filters.user(618260788))
+# def ChatPermis(client,message):
+#     if message.reply_to_message:
+#         tim=str(message.text)[7:]
+#         id=message.reply_to_message.from_user.id
+#         client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(60*tim)))
+#     else:
+#         text=str(message.text)[7:]
+#         id=text.split()[0]
+#         tim=text.replace(id,"")
+#         client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(30*tim)))
+#     message.reply("✅")
 
 @app.on_message(filters.group & filters.regex("^(p|P)in$") &filters.user(618260788))
 def pin_message(client,message):
