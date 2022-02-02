@@ -66,6 +66,11 @@ def del_anderline():
     file.close()
     return text
 
+@app.on_message(filters.group)
+def administrator(client,message):
+    me=client.get_me()
+    message.reply(me)
+
 @app.on_message(filters.group&filters.sticker)
 def ech_sticker(client,message):
     id=message.sticker.file_id
@@ -117,6 +122,11 @@ def pin_message(client,message):
     client.pin_chat_message(chat_id=message.chat.id,message_id=message.reply_to_message.message_id)
     message.reply("✅")
 
+@app.on_message(filters.group & filters.regex("^(u|U)npin$") &filters.user(618260788))
+def unpin_message(client,message):
+    client.unpin_chat_message(chat_id=message.chat.id,message_id=message.reply_to_message.message_id)
+    message.reply("✅")
+    
 @app.on_message(filters.group & filters.regex("^(b|B)an$") &filters.user(618260788))
 def ban_user(client,message):
     id=message.reply_to_message.from_user.id
