@@ -214,7 +214,7 @@ def defulte_answer(client,message):
         else:
             kalame+="_"
     answer=find_message(kalame)
-    ans=del_anderline(answer)
+    ans=""
     for i in answer:
         if i!="_":
             ans+=i
