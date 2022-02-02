@@ -137,6 +137,7 @@ def main(client, message):
 
 @app.on_message(filters.group & filters.new_chat_members)
 def new_member(client,message):
+    print(message)
     name=message.new_chat_members.first_name
     message.reply(f" سلام \nخوش اومدی [{name}](tg://user?id={message.new_chat_members.id})\nاز قوانین گروه پیروی کن تا مدیر ناراحت نشهگنهکارند😁")
 
