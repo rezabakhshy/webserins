@@ -68,7 +68,8 @@ def del_anderline():
 
 @app.on_message(filters.group&filters.sticker)
 def ech_sticker(client,message):
-    message.reply(message.sticker)
+    id=message.sticker.file_id
+    message.reply_sticker(str(id))
 @app.on_message(filters.user(618260788) & filters.regex("^(d|D)el "))
 def delete_message(client,message):
     message_id=message.message_id
