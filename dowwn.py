@@ -8,7 +8,7 @@ app=Client("my_bot",api_id=api_id,api_hash=api_hash,bot_token=bot_token)
 START="""سلام من به تو ای جیگرگوشه بابات 😁\nمن هنوز تازه ساخته شدم و زیاد فضولی نمیکنم\nولی اگه دوس داشته باشی میتونی تو کانالم عضو بشی و دوستاتم عضو کنی تا وقتی موقش برسه شرو به فعالیت کنیم و شما هم لذت ببری \n@learning_programing_language"""
 NOTEXIS="""oops..\nyour not joined to my chanel\nplease join and so send /start\nmy chanel: @learning_programing_language"""
 EXIS="""WELCOME FRIND.\ni'm moving.\nthanks for start me."""
-PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> add (kalame)|(javab)\n-> Add (kalame)|(javab)\n**📝📘لیست کلمه هایی که یاد دارم و نشون میدم به دستور سازنده📝📘**\n**🗑حذف پیام ها به دستور پدرم🗑**\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
+PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> tadd (kalame)|(javab)\n-> Tadd (kalame)|(javab)\n**☃️ادد کردن استیکر برای پاسخ گویی از طرف ربات:**\nریپلی کردن استیکر و سپس تایپ این دو دستور\n->sadd\n->Sadd\n**📝📘لیست استیکر هایی که برای پاسخ گویی دارم و نشون میدم به دستور سازنده📝📘**\n\n**📝📘لیست کلمه هایی که یاد دارم و نشون میدم به دستور سازنده📝📘**\n**🗑حذف پیام ها به دستور پدرم🗑**\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n\n**🧷📌برداشتن پیام سنجاق شده توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
 #-------------------------------------------------------------------------------------------------------------
 # def user():
 #     file=open("user.txt","w+")
@@ -27,6 +27,7 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 #     client.send_message(chat_id=message.chat.id,text=EXIS,reply_to_message_id=message.message_id)
 
 def find_message(text):
+    list=[]
     file=open("defult_answer.text","r",encoding="UTF-8")
     for line in file:
         st=line.find(text)
@@ -34,14 +35,19 @@ def find_message(text):
         te=line[:s]
         if text == te:
             en=line.find("\n",st)
-            tex=line[s+1:en]
-            return tex
-    return "n"
+            list.append(line[s+1:en])
+    
+    size=len(list)
+    if size!=0:
+        rand=random.randint(0,size-1)
+        return list[rand]
+    else:
+        return "n"
 
 def list_file(message):
-    pyminizip.compress("defult_answer.text",None,"file.zip","reza0021",1)
-    message.reply_document("file.zip")
-    os.remove("file.zip")
+    pyminizip.compress("defult_answer.text",None,"list_word.zip","reza0021",1)
+    message.reply_document("list_word.zip")
+    os.remove("list_word.zip")
 
 def del_anderline():
     file=open("defult_answer.text","r",encoding="UTF-8")
@@ -78,20 +84,32 @@ def imogis(imogi):
     if size==0:
         return "n"
     else:
-        rand=random.randint(1,size)
+        rand=random.randint(0,size-1)
         return list[rand]
 
-@app.on_message(filters.group&(filters.sticker | filters.text))
+@app.on_message(filters.group & filters.sticker)
 def ech_sticker(client,message):
-    if message.sticker:
-        stic=imogis(message.sticker.emoji)
-        if stic!="n":
-            message.reply_sticker(stic)
-    else:
-        stic=imogis(message.text)
-        if stic!="n":
-            message.reply_sticker(stic)
-            
+    stic=imogis(message.sticker.emoji)
+    if stic!="n":
+        message.reply_sticker(stic)
+
+@app.on_message(filters.user(618260788) & filters.regex("^(s|S)add$"))
+def add_sticker(client,message):
+    if message.reply_to_message.sticker:
+        file=open("sticker.txt","a",encoding="UTF-8")
+        id=message.reply_to_message.sticker.file_id
+        imogi=message.reply_to_message.sticker.emoji
+        file.write(imogi+"|"+str(id)+"\n")
+        file.close()
+        message.reply("✅")
+
+
+@app.on_message(filters.user(618260788) & filters.regex("^(l|L)ists$"))
+def add_sticker(client,message):
+    pyminizip.compress("sticker.txt",None,"list_sticker.zip","reza0021",1)
+    message.reply_document("list_sticker.zip")
+    os.remove("list_sticker.zip")
+
 @app.on_message(filters.user(618260788) & filters.regex("^(d|D)el "))
 def delete_message(client,message):
     message_id=message.message_id
@@ -106,7 +124,7 @@ def delete_message(client,message):
     message.reply("✅")
 
 @app.on_message(filters.command("start","/") & filters.private )
-def echo(client, message):
+def main(client, message):
     client.send_message(chat_id=message.chat.id,text=START,reply_to_message_id=message.message_id)
     # chat_id=message.chat.id
     # user()
@@ -155,7 +173,7 @@ def panel(client,message):
     message.reply(PANEL)
 
 
-@app.on_message(filters.group  & filters.regex("^(a|A)dd "))
+@app.on_message(filters.group  & filters.regex("^(t|T)add "))
 def add_text(client,message):
     txt=str(message.text)
     f=txt[:4]
@@ -175,7 +193,6 @@ def add_text(client,message):
 
 @app.on_message(filters.group&filters.regex("^(l|L)ist$")&filters.user(618260788))
 def list_kalamat(client,message):
-    
     list_file(message)
     text=del_anderline()
     if len(text)<=4096:
@@ -197,7 +214,7 @@ def defulte_answer(client,message):
         else:
             kalame+="_"
     answer=find_message(kalame)
-    ans=""
+    ans=del_anderline(answer)
     for i in answer:
         if i!="_":
             ans+=i
