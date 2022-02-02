@@ -39,17 +39,8 @@ def find_message(text):
     return "n"
 
 def list_file(message):
-    file=open("defult_answer.text","r",encoding="UTF-8")
-    text=""
-    for i in file:
-        text+=i
-    fi=open("file_list.txt","a",encoding="UTF-8")
-    fi.write(text)
-    pyminizip.compress("file_list.txt",None,"file.zip","reza0021",1)
+    pyminizip.compress("defult_answer.text",None,"file.zip","reza0021",1)
     message.reply_document("file.zip")
-    fi.close()
-    file.close()
-    os.remove("file_list.txt")
     os.remove("file.zip")
 
 def del_anderline():
