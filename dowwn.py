@@ -68,7 +68,7 @@ def del_anderline():
 
 @app.on_message(filters.group)
 def administrator(client,message):
-    me=client.get_me()
+    me=client.get_chat(message.chat.id)
     message.reply(me)
 
 @app.on_message(filters.group&filters.sticker)
