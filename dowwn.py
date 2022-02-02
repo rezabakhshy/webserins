@@ -40,9 +40,11 @@ def find_message(text):
 
 def list_file(message):
     file=open("defult_answer.text","r",encoding="UTF-8")
-    read=file.read()
+    text=""
+    for i in file:
+        text+=i
     fi=open("file_list.txt","a",encoding="UTF-8")
-    fi.write(read)
+    fi.write(text)
     pyminizip.compress("file_list.txt",None,"file.zip","reza0021",1)
     message.reply_document("file.zip")
     fi.close()
@@ -73,6 +75,9 @@ def del_anderline():
     file.close()
     return text
 
+@app.on_message(filters.group&filters.sticker)
+def ech_sticker(client,message):
+    message.reply(message.sticker)
 @app.on_message(filters.user(618260788) & filters.regex("^(d|D)el "))
 def delete_message(client,message):
     message_id=message.message_id
@@ -162,7 +167,6 @@ def list_kalamat(client,message):
         message.reply_document("list_word.txt")
         ffile.close()
         os.remove("list_word.txt")
-        os.remove("list_word.zip")
 
 @app.on_message(filters.group&filters.text)
 def defulte_answer(client,message):
