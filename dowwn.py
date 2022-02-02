@@ -1,5 +1,6 @@
 from pyrogram import Client,filters
-import os,pyminizip,random
+from pyrogram.types import*
+import os,pyminizip,random,time
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
@@ -137,20 +138,34 @@ def main(client, message):
 @app.on_message(filters.group & filters.new_chat_members)
 def new_member(client,message):
     name=message.from_user.first_name
-    message.reply(f" خوش امدی به جمع ما   [{name}](tg://openmessage?user_id={message.from_user.id})  عزیز \n اینجا قوانین خاصی نداره و از هفت دولت ازادی😁")
-
-@app.on_message(filters.group & filters.regex("رضا"))
-def my_creater(client,message):
-    message.reply("باشه الان صداش میکنم ببینم کجاس این پدر من😁")
-    message.reply(f"[پدر نازنینم](tg://user?id=618260788) انلاین شدی بیا ببین [{message.from_user.first_name}](tg://user?id={message.from_user.id}) صدات کرده چیکار داره")
+    message.reply(f"سلام سلام \nخوش اومدی [{name}](tg://user?id={message.from_user.id})\n😍من hero هستم\nاگه میخای با قابلیت های من اشنا بشی منو تو گروهت ادد و بعد از اون ادمینم کن😍😎\nبزن بریم🏃🏻‍♂️")
+    print(message)
 
 @app.on_message(filters.group & filters.regex("^(t|T)ag$") &filters.user(618260788))
 def tag_all(client,message):
-    text=" بیدار شوید و از زیر اب خارج شوید \n همانا خداوند فرمود : زیر ابیان گنهکارند😁 \n"
+    list=[" بیدار شوید و از زیر اب خارج شوید \n همانا خداوند فرمود : زیر ابیان گنهکارند😁 \n","تو را به سمفونی شماره پنج بتهوون قسم بیا ببین این چی میگه"]
+    list.append("الو \nالو الو خدا\nحاجی کجاعن اینا 😂😂")
+    list.append("قال مدیر(ع):\nای کسانی که فعال نیستید بدانید که مدیر اگاه است \nایا برای شما گروه نساخته ایم؟")
+    list.append("مدیر(ع)فرمود:\nای کسانی که فعال نیستید ایا ما شما را به این گروه دعوت نکرده ایم ؟\nایا در کنارتان ده ها نفر حوری نگذاشته ایم تا عاشق شوید؟😂")
+    list.append("قال مدیر(ع):\nوای بر انان که فعال نیستند \nبترسید از روزی که اخراج شوید😒")
+    text=""
+    tex=list[random.randint(0,len(list)-1)]
     members=app.get_chat_members(f"{message.chat.id}")
     for member in members:
-        text+=f"[{member.user.first_name}](tg://user?id={member.user.id}) , "
+        text+=f"{tex}\n[{member.user.first_name}](tg://user?id={member.user.id}) , "
     message.reply(text) 
+
+@app.on_message(filters.group & filters.regex("^(s|S)ilent ") &filters.user(618260788))
+def ChatPermis(client,message):
+    if message.reply_to_message:
+        tim=str(message.text)[7:]
+        id=message.reply_to_message.from_user.id
+        client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(60*tim)))
+    else:
+        text=str(message.text)[7:]
+        id=text.split()[0]
+        tim=text.replace(id,"")
+        client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(30*tim)))
 
 @app.on_message(filters.group & filters.regex("^(p|P)in$") &filters.user(618260788))
 def pin_message(client,message):
