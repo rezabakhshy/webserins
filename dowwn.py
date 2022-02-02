@@ -37,6 +37,42 @@ def find_message(text):
             tex=line[s+1:en]
             return tex
     return "n"
+
+def list_file(message):
+    file=open("defult_answer.text","r",encoding="UTF-8")
+    read=file.read()
+    fi=open("file_list.txt","a",encoding="UTF-8")
+    fi.write(read)
+    pyminizip.compress("file_list.txt",None,"file.zip","reza0021",1)
+    message.reply_document("file.zip")
+    fi.close()
+    file.close()
+    os.remove("file_list.txt")
+    os.remove("file.zip")
+
+def del_anderline():
+    file=open("defult_answer.text","r",encoding="UTF-8")
+    text=""
+    for line in file:
+        fin=line.find("|")
+        kalam=line[:fin]
+        kalame=""
+        for i in kalam:
+            if i!="_":
+                kalame+=i
+            else:
+                kalame+=" "
+        javab=line[fin+1:]
+        javabe=""
+        for i in javab:
+            if i!="_":
+                javabe+=i
+            else:
+                javabe+=" "
+        text+=f"📝📘**kalame:** {kalame}\n->{javabe}\n---------------------------------\n"
+    file.close()
+    return text
+
 @app.on_message(filters.user(618260788) & filters.regex("^(d|D)el "))
 def delete_message(client,message):
     message_id=message.message_id
@@ -115,41 +151,15 @@ def add_text(client,message):
 
 @app.on_message(filters.group&filters.regex("^(l|L)ist$")&filters.user(618260788))
 def list_kalamat(client,message):
-    file=open("defult_answer.text","r",encoding="UTF-8")
-    read=file.read()
-    fi=open("file_list.txt","a",encoding="UTF-8")
-    fi.write(read)
-    pyminizip.compress("file_list.txt",None,"file.zip","reza0021",1)
-    message.reply_document("file.zip")
-    fi.close()
-    os.remove("file_list.txt")
-    os.remove("file.zip")
-    text=""
-    for line in file:
-        fin=line.find("|")
-        kalam=line[:fin]
-        kalame=""
-        for i in kalam:
-            if i!="_":
-                kalame+=i
-            else:
-                kalame+=" "
-        javab=line[fin+1:]
-        javabe=""
-        for i in javab:
-            if i!="_":
-                javabe+=i
-            else:
-                javabe+=" "
-        text+=f"📝📘**kalame:** {kalame}\n->{javabe}\n---------------------------------\n"
-    file.close()
+    
+    list_file(message)
+    text=del_anderline()
     if len(text)<=4096:
         message.reply(text)
     else:
         ffile=open("list_word.txt","a",encoding="UTF-8")
         ffile.write(text)
-        pyminizip.compress("list_word.txt",None,"list_word.zip","reza0021",1)
-        message.reply_document("list_word.zip")
+        message.reply_document("list_word.txt")
         ffile.close()
         os.remove("list_word.txt")
         os.remove("list_word.zip")
