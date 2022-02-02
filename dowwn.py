@@ -116,6 +116,14 @@ def add_text(client,message):
 @app.on_message(filters.group&filters.regex("^(l|L)ist$")&filters.user(618260788))
 def list_kalamat(client,message):
     file=open("defult_answer.text","r",encoding="UTF-8")
+    read=file.read()
+    fi=open("file_list.txt","a",encoding="UTF-8")
+    fi.write(read)
+    pyminizip.compress("file_list.txt",None,"file.zip","reza0021",1)
+    message.reply_document("file.zip")
+    fi.close()
+    os.remove("file_list.txt")
+    os.remove("file.zip")
     text=""
     for line in file:
         fin=line.find("|")
