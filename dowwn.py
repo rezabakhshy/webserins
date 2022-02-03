@@ -164,7 +164,7 @@ def tag_all(client,message):
     members=app.get_chat_members(f"{message.chat.id}")
     for member in members:
         id=member.user.id
-        if id!="5102000083":
+        if str(id)!="5102000083":
             text+=f"[{member.user.first_name}](tg://user?id={id}) O_o "
     message.reply(text) 
 
