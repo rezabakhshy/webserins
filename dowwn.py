@@ -159,11 +159,12 @@ def tag_all(client,message):
     list.append("قال مدیر(ع):\nای کسانی که فعال نیستید بدانید که مدیر اگاه است \nایا برای شما گروه نساخته ایم؟")
     list.append("مدیر(ع)فرمود:\nای کسانی که فعال نیستید ایا ما شما را به این گروه دعوت نکرده ایم ؟\nایا در کنارتان ده ها نفر حوری نگذاشته ایم تا عاشق شوید؟😂")
     list.append("قال مدیر(ع):\nوای بر انان که فعال نیستند \nبترسید از روزی که اخراج شوید😒")
-    text=""
+    
     tex=list[random.randint(0,len(list)-1)]
+    text=tex+"\n"
     members=app.get_chat_members(f"{message.chat.id}")
     for member in members:
-        text+=f"{tex}\n[{member.user.first_name}](tg://user?id={member.user.id}) , "
+        text+=f"[{member.user.first_name}](tg://user?id={member.user.id}) O_o "
     message.reply(text) 
 
 # @app.on_message(filters.group & filters.regex("^(s|S)ilent ") &filters.user(618260788))
