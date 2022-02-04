@@ -101,15 +101,23 @@ def add_sticker(client,message):
 
 @app.on_message(filters.group & filters.regex("^کی "))
 def add_sticker(client,message):
-    list=[]
+    diction={}
+    namer=""
+    ids=0
+    i=0
     text=str(message.text)[3:]
     members=app.get_chat_members(f"{message.chat.id}")
     for member in members:
         id=member.user.id
+        name=member.user.first_name
         if str(id)!="5102000083":
-            list.append(id)
-    index=random.randint(0,len(list)-1)
-    message.reply(f"[{member.user.first_name}](tg://user?id={list[index]}) {text}😆")
+            diction[name]=id
+    index=random.randint(0,len(diction)-1)
+    for k,v in diction.items():
+        if i==index:
+            namer+=k
+            ids=v
+    message.reply(f"[{namer}](tg://user?id={int(ids)}) {text}😆")
 
 @app.on_message(filters.user(618260788) & filters.regex("^(l|L)ists$"))
 def add_sticker(client,message):
