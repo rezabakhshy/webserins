@@ -94,6 +94,22 @@ def add_sticker(client,message):
         file.close()
         message.reply("✅")
 
+@app.on_message(filters.group & filters.regex("^بگو "))
+def add_sticker(client,message):
+    text=str(message.text)[4:]
+    message.reply(text)
+
+@app.on_message(filters.group & filters.regex("^کی "))
+def add_sticker(client,message):
+    list=[]
+    text=str(message.text)[3:]
+    members=app.get_chat_members(f"{message.chat.id}")
+    for member in members:
+        id=member.user.id
+        if str(id)!="5102000083":
+            list.append(id)
+    index=random.randint(0,len(list)-1)
+    message.reply(f"[{member.user.first_name}](tg://user?id={list[index]}) {text}😆")
 
 @app.on_message(filters.user(618260788) & filters.regex("^(l|L)ists$"))
 def add_sticker(client,message):
