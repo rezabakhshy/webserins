@@ -103,7 +103,7 @@ def add_sticker(client,message):
 def add_sticker(client,message):
     diction={}
     namer=""
-    ids=0
+    ids=""
     i=0
     text=str(message.text)[3:]
     members=app.get_chat_members(f"{message.chat.id}")
@@ -111,13 +111,13 @@ def add_sticker(client,message):
         id=member.user.id
         name=member.user.first_name
         if str(id)!="5102000083":
-            diction[name]=id
+            diction[name]=str(id)
     index=random.randint(0,len(diction)-1)
     for k,v in diction.items():
         if i==index:
             namer+=k
-            ids=v
-    message.reply(f"[{namer}](tg://user?id={int(ids)}) {text}😆")
+            ids+=v
+    message.reply(f"[{str(namer)}](tg://user?id={int(ids)}) {text}😆")
 
 @app.on_message(filters.user(618260788) & filters.regex("^(l|L)ists$"))
 def add_sticker(client,message):
