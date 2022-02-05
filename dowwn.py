@@ -193,18 +193,24 @@ def tag_all(client,message):
             text+=f"[{member.user.first_name}](tg://user?id={id}) O_o "
     message.reply(text) 
 
-# @app.on_message(filters.group & filters.regex("^(s|S)ilent ") &filters.user(618260788))
-# def ChatPermis(client,message):
-#     if message.reply_to_message:
-#         tim=str(message.text)[7:]
-#         id=message.reply_to_message.from_user.id
-#         client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(60*tim)))
-#     else:
-#         text=str(message.text)[7:]
-#         id=text.split()[0]
-#         tim=text.replace(id,"")
-#         client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(30*tim)))
-#     message.reply("✅")
+@app.on_message(filters.group & filters.regex("^(s|S)ilent ")&filters.user(618260788))
+def ChatPermis(client,message):
+    if message.reply_to_message:
+        tim=int(str(message.text)[7:])
+        id=message.reply_to_message.from_user.id
+        client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(60*tim)))
+    else:
+        text=str(message.text)[7:]
+        id=text.split()[0]
+        tim=int(text.replace(id,""))
+        client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(60*tim)))
+    message.reply(f"🤐کاربر با ایدی عددی 🆔{id} برای 🕧{tim} دقیقه ساکت شد.🤐 \n♋️برای خارج کردن از حالت سکوت دستور زیر را کپی و ارسال کنید.📄\n->`Unsilent {id}`")
+
+@app.on_message(filters.group & filters.regex("^(u|U)nsilent ")&filters.user(618260788))
+def ChatPermis(client,message):
+    id=str(message.text)[9:]
+    client.restrict_chat_member(message.chat.id,id,ChatPermissions(can_send_messages=True,can_send_media_messages=True,can_invite_users=True))
+    message.reply(f"😁کاربر با ایدی 🆔{id} از حالت سکوت خارج شد.😁")
 
 @app.on_message(filters.group & filters.regex("^(p|P)in$") &filters.user(618260788))
 def pin_message(client,message):
