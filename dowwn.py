@@ -204,7 +204,7 @@ def ChatPermis(client,message):
         text=str(message.text)[7:]
         id=text.split()[0]
         tim=int(text.replace(id,""))
-        client.restrict_chat_member(message.chat.id,id,ChatPermissions(),int(time()+(60*tim)))
+        client.restrict_chat_member(message.chat.id,id,ChatPermissions(can_send_messages=False,can_send_media_messages=False,can_invite_users=False),int(time()+(60*tim)))
     message.reply(f"🤐کاربر با ایدی عددی 🆔{id} برای 🕧{tim} دقیقه ساکت شد.🤐 \n♋️برای خارج کردن از حالت سکوت دستور زیر را کپی و ارسال کنید.📄\n->`Unsilent {id}`")
 
 @app.on_message(filters.group & filters.regex("^(u|U)nsilent ")&filters.user(618260788))
