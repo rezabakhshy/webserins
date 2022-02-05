@@ -1,6 +1,7 @@
 from pyrogram import Client,filters
 from pyrogram.types import*
 import os,pyminizip,random,time
+from pyrogram.types import ChatPermissions
 api_id=13893053
 api_hash="f586d92837b0f6eebcaa3e392397f47c"
 bot_token="5102000083:AAHKoWGuHKriH4Z4_Oc-QwR4tz6IhM2fH68"
