@@ -229,10 +229,10 @@ def ban_user(client,message):
     text=str(message.text)[4:]
     if "+" in text:
         id=message.reply_to_message.from_user.id
-        message.chat.Ban_member(id,time()+86400)
+        message.chat.ban_member(id,time()+86400)
     elif "-" in text:
         id=message.reply_to_message.from_user.id
-        message.chat.Ban_member(id,0)
+        message.chat.ban_member(id,0)
     message.reply("✅")
 
 @app.on_message(filters.group  & filters.regex("^(p|P)anel$")&filters.user(618260788))
