@@ -230,6 +230,19 @@ def ban_user(client,message):
     message.chat.kick_member(id)
     message.reply("✅")
 
+@app.on_message(filters.user(618260788) & filters.regex("^(d|D)el "))
+def delete_message(client,message):
+    message_id=message.message_id
+    chat_id=message.chat.id
+    count=message.text[4:]
+    if count=="all":
+        count=message_id
+    list_id=[]
+    for i in range(int(message_id-1),int(message_id-1)-int(count),-1):
+        list_id.append(i)
+    client.delete_messages(chat_id,list_id)
+    message.reply("✅")
+
 @app.on_message(filters.group  & filters.regex("^(p|P)anel$")&filters.user(618260788))
 def panel(client,message):
     message.reply(PANEL)
