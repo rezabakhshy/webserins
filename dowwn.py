@@ -1,3 +1,4 @@
+from markdown import markdown
 from pyrogram import Client,filters
 from pyrogram.types import*
 import os,pyminizip,random
@@ -193,7 +194,7 @@ def tag_all(client,message):
         id=member.user.id
         if str(id)!="5102000083":
             text+=f"[{member.user.first_name}](tg://user?id={id}) O_o "
-    message.reply(text) 
+    message.reply(text,parse_mode="markdown") 
 
 @app.on_message(filters.group & filters.regex("^(s|S)ilent ")&filters.user(618260788))
 def ChatPermis(client,message):
