@@ -1,4 +1,3 @@
-from markdown import markdown
 from pyrogram import Client,filters
 from pyrogram.types import*
 import os,pyminizip,random
