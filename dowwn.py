@@ -224,10 +224,15 @@ def unpin_message(client,message):
     client.unpin_chat_message(chat_id=message.chat.id,message_id=message.reply_to_message.message_id)
     message.reply("✅")
     
-@app.on_message(filters.group & filters.regex("^(b|B)an$") &filters.user(618260788))
+@app.on_message(filters.group & filters.regex("^(b|B)an ") &filters.user(618260788))
 def ban_user(client,message):
-    id=message.reply_to_message.from_user.id
-    message.chat.kick_member(id)
+    text=str(message.text)[4:]
+    if "+" in text:
+        id=message.reply_to_message.from_user.id
+        message.chat.Ban_member(id,time()+86400)
+    elif "-" in text:
+        id=message.reply_to_message.from_user.id
+        message.chat.Ban_member(id,0)
     message.reply("✅")
 
 @app.on_message(filters.group  & filters.regex("^(p|P)anel$")&filters.user(618260788))
