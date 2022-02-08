@@ -291,22 +291,20 @@ def list_kalamat(client,message):
 def defulte_answer(client,message):
     global locked
     list=[]
-    for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
-        list.append(admin.user.id)
+    if locked==True:
+        for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
+            list.append(admin.user.id)
 
-    if (locked==True) and (not(message.from_user.id in list)):
-        message.delete()
-    else:
-        pass
-@app.on_message(filters.group&filters.text)
-def defulte_answer(client,message):
-    text=str(message.text)
-    kalame=text.replace(" ","_")
-    answer=find_message(kalame)
-    ans=answer.replace("_"," ")
-    if answer=="n":
-        pass
-    else:
-        message.reply(ans)
-
+        if (locked==True) and (not(message.from_user.id in list)):
+            message.delete()
+    elif message.text:
+        text=str(message.text)
+        kalame=text.replace(" ","_")
+        answer=find_message(kalame)
+        ans=answer.replace("_"," ")
+        if answer=="n":
+            pass
+        else:
+            message.reply(ans)
+    
 app.run()
