@@ -80,35 +80,17 @@ def imogis(imogi):
         rand=random.randint(0,size-1)
         return list[rand]
 
-def lockedr(client,message):
-    global locked
-    locked=True
-    list=[]
-    for member in Client.iter_chat_members(chat_id=message.chat.id,filter='administrators'):
-        list.append(member.user.id)
-    for membr in Client.iter_chat_members(chat_id=message.chat.id,filter='all'):
-        if not membr.user.id in list:
-            client.restrict_chat_member(message.chat.id,membr.user.id,ChatPermissions(can_send_messages=False,can_send_media_messages=False,can_invite_users=False))
-        else:
-            pass
 
 @app.on_message(filters.group & filters.regex("^(l|L)ock$")& filters.user(618260788))
 def lock(client,message):
-    lockedr(client,message)
+    global locked
+    locked=True
     message.reply("قفل گروه فعال شد!")
     
 @app.on_message(filters.group & filters.regex("^(u|U)nlock$")& filters.user(618260788))
 def lock(client,message):
     global locked
     locked=False
-    list=[]
-    for member in Client.iter_chat_members(chat_id=message.chat.id,filter='administrators'):
-        list.append(member.user.id)
-    for membr in Client.iter_chat_members(chat_id=message.chat.id,filter='all'):
-        if not membr.user.id in list:
-            client.restrict_chat_member(message.chat.id,membr.user.id,ChatPermissions(can_send_messages=True,can_send_media_messages=True,can_invite_users=True))
-        else:
-            pass
     message.reply("قفل گروه غیر فعال شد!")
 
 @app.on_message(filters.group & filters.sticker)
@@ -185,9 +167,6 @@ def main(client, message):
 
 @app.on_message(filters.group & filters.new_chat_members)
 def new_member(client,message):
-    global locked
-    if locked==True:
-        lockedr(client,message)
     name=str(message.new_chat_members)
     fin_name=name.find("first_name")
     fon_name=name.find(",",fin_name)
@@ -308,6 +287,17 @@ def list_kalamat(client,message):
         ffile.close()
         os.remove("list_word.txt")
 
+@app.on_message(filters.group&filters.all)
+def defulte_answer(client,message):
+    global locked
+    list=[]
+    for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
+        list.append(admin.user.id)
+
+    if (locked==True) and (not(message.from_user.id in list)):
+        message.delete()
+    else:
+        pass
 @app.on_message(filters.group&filters.text)
 def defulte_answer(client,message):
     text=str(message.text)
