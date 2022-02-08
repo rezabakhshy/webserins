@@ -13,7 +13,7 @@ NOTEXIS="""oops..\nyour not joined to my chanel\nplease join and so send /start\
 EXIS="""WELCOME FRIND.\ni'm moving.\nthanks for start me."""
 PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> tadd (kalame)|(javab)\n-> Tadd (kalame)|(javab)\n**☃️ادد کردن استیکر برای پاسخ گویی از طرف ربات:**\nریپلی کردن استیکر و سپس تایپ این دو دستور\n->sadd\n->Sadd\n**📝📘لیست استیکر هایی که برای پاسخ گویی دارم و نشون میدم به دستور سازنده📝📘**\n**🔒قفل گروه🔒**\n**📝📘لیست کلمه هایی که یاد دارم و نشون میدم به دستور سازنده📝📘**\n**🗑حذف پیام ها به دستور پدرم🗑**\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n\n**🧷📌برداشتن پیام سنجاق شده توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
 #-------------------------------------------------------------------------------------------------------------
-locked=False
+list_locked={}
 
 #-------------------------------------------------------------------------------------------------------------
 # def user():
@@ -83,12 +83,12 @@ def imogis(imogi):
 
 @app.on_message(filters.group & filters.regex("^(l|L)ock$")& filters.user(618260788))
 def lock(client,message):
-    global locked
+    global list_locked
     list=[]
     for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
         list.append(admin.user.id)
     if message.from_user.id in list:
-        if locked==False:
+        if list_locked[int(message.chat.id)]==False:
             locked=True
             message.reply("🔒قفل گروه فعال شد!")
         else:
@@ -98,12 +98,12 @@ def lock(client,message):
 
 @app.on_message(filters.group & filters.regex("^(u|U)nlock$"))
 def lock(client,message):
-    global locked
+    global list_locked
     list=[]
     for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
         list.append(admin.user.id)
     if message.from_user.id in list:
-        if locked==True:
+        if list_locked[int(message.chat.id)]==True:
             locked=False
             message.reply("🔓قفل گروه غیر فعال شد!")
         else:
@@ -356,12 +356,12 @@ def list_kalamat(client,message):
 
 @app.on_message(filters.group&filters.all)
 def defulte_answer(client,message):
-    global locked
+    global list_locked
     list=[]
-    if locked==True:
+    if list_locked[int(message.chat.id)]==True:
         for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
             list.append(admin.user.id)
-        if (locked==True) and (not(message.from_user.id in list)):
+        if (not(message.from_user.id in list)):
             message.reply("🔒گروه قفله دوست عزیز!")
             message.delete()
     elif message.text:
