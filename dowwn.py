@@ -84,15 +84,18 @@ def imogis(imogi):
 @app.on_message(filters.group & filters.regex("^(l|L)ock$")& filters.user(618260788))
 def lock(client,message):
     global list_locked
+    swit=0
     list=[]
     for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
         list.append(admin.user.id)
-    if message.from_user.id in list:
-        if list_locked[int(message.chat.id)]==False:
-            locked=True
-            message.reply("🔒قفل گروه فعال شد!")
-        else:
-            message.replt("🔒گروه قفل بود!")
+    for i,k in list_locked.items():
+        if i==int(message.chat.id):
+            swit=1
+    if (swit==1)and(message.from_user.id in list):
+       message.reply("🔒گروه قفل بود!")
+    elif (swit==0)and(message.from_user.id in list):
+        list_locked[int(message.chat.id)]=True
+        message.reply("🔒قفل گروه فعال شد!")
     else:
         message.reply("برو بچه جان با دم شیر بازی نکن\nاین دستور برای مدیر و ادمین هاست")
 
@@ -100,14 +103,17 @@ def lock(client,message):
 def lock(client,message):
     global list_locked
     list=[]
+    swit=0
+    for i,k in list_locked.items():
+        if i==int(message.chat.id):
+            swit=1
     for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
         list.append(admin.user.id)
-    if message.from_user.id in list:
-        if list_locked[int(message.chat.id)]==True:
-            locked=False
-            message.reply("🔓قفل گروه غیر فعال شد!")
-        else:
-            message.reply("🔓گروه باز بود!")
+    if (swit==1)and(message.from_user.id in list):
+        list_locked.pop(int(message.chat.id))
+        message.reply("🔓قفل گروه غیر فعال شد!")
+    elif (swit==0)and(message.from_user.id in list):
+        message.reply("🔓گروه باز بود!")
     else:
         message.reply("برو بچه جان با دم شیر بازی نکن\nاین دستور برای مدیر و ادمین هاست")
 
@@ -358,7 +364,11 @@ def list_kalamat(client,message):
 def defulte_answer(client,message):
     global list_locked
     list=[]
-    if list_locked[int(message.chat.id)]==True:
+    swit=0
+    for i,k in list_locked.items():
+        if i==int(message.chat.id):
+            swit==1
+    if swit==1:
         for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
             list.append(admin.user.id)
         if (not(message.from_user.id in list)):
