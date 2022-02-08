@@ -93,11 +93,6 @@ def lock(client,message):
     locked=False
     message.reply("قفل گروه غیر فعال شد!")
 
-@app.on_message(filters.group & filters.sticker)
-def ech_sticker(client,message):
-    stic=imogis(message.sticker.emoji)
-    if stic!="n":
-        message.reply_sticker(stic)
 
 @app.on_message(filters.group & filters.regex("^(s|S)add$"))
 def add_sticker(client,message):
@@ -306,5 +301,10 @@ def defulte_answer(client,message):
             pass
         else:
             message.reply(ans)
-    
+    elif message.sticker:
+        stic=imogis(message.sticker.emoji)
+        if stic!="n":
+            message.reply_sticker(stic)
+
+
 app.run()
