@@ -367,7 +367,7 @@ def defulte_answer(client,message):
     swit=0
     for i,k in list_locked.items():
         if i==int(message.chat.id):
-            swit==1
+            swit=1
     if swit==1:
         for admin in client.get_chat_members(chat_id=message.chat.id,filter="administrators"):
             list.append(admin.user.id)
