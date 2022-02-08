@@ -13,6 +13,9 @@ NOTEXIS="""oops..\nyour not joined to my chanel\nplease join and so send /start\
 EXIS="""WELCOME FRIND.\ni'm moving.\nthanks for start me."""
 PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چرا هعی پنل پنل میکنی؟\n🥲حالا دلت و نمیشکنم بیا یه لیست کوچولو بدمت که میتونم انجام بدم \n**🔠✅ادد کردن کلمه برای پاسخگویی از طرف خود ربات با دستور :**\n-> tadd (kalame)|(javab)\n-> Tadd (kalame)|(javab)\n**☃️ادد کردن استیکر برای پاسخ گویی از طرف ربات:**\nریپلی کردن استیکر و سپس تایپ این دو دستور\n->sadd\n->Sadd\n**📝📘لیست استیکر هایی که برای پاسخ گویی دارم و نشون میدم به دستور سازنده📝📘**\n\n**📝📘لیست کلمه هایی که یاد دارم و نشون میدم به دستور سازنده📝📘**\n**🗑حذف پیام ها به دستور پدرم🗑**\n**🆔تگ کاربران توسط سازنده🆔**\n**❌⛔️بن کاربران توسط سازنده❌⛔️**\n**🧷📌سنجاق کردن پیام توسط سازنده🧷📌**\n\n**🧷📌برداشتن پیام سنجاق شده توسط سازنده🧷📌**\n**♥️♦️خوشامد گویی به دوستان تازه وارد♥️♦️**\n**🙆🏻‍♂️فعلا همیناس ولی پدرم داره رشدم میده و در اینده نزدیک کاملم میکنه🙆🏻‍♂️**"""
 #-------------------------------------------------------------------------------------------------------------
+locked=False
+
+#-------------------------------------------------------------------------------------------------------------
 # def user():
 #     file=open("user.txt","w+")
 #     f=app.get_chat_members("@learning_programing_language")
@@ -25,9 +28,6 @@ PANEL="""😑🤦🏻تو که میدونی پنلی برام ننوشتی چر�
 #     file=fil.read()
 #     exis=file.find(str(user))
 #     return exis-
-
-# def main(client,message):
-#     client.send_message(chat_id=message.chat.id,text=EXIS,reply_to_message_id=message.message_id)
 
 def find_message(text):
     list=[]
@@ -79,6 +79,37 @@ def imogis(imogi):
     else:
         rand=random.randint(0,size-1)
         return list[rand]
+
+def lockedr(client,message):
+    global locked
+    locked=True
+    list=[]
+    for member in Client.iter_chat_members(message.chat.id,filter='administrators'):
+        list.append(member.user.id)
+    for membr in Client.iter_chat_members(message.chat.id,filter='all'):
+        if not membr.user.id in list:
+            client.restrict_chat_member(message.chat.id,membr.user.id,ChatPermissions(can_send_messages=False,can_send_media_messages=False,can_invite_users=False))
+        else:
+            pass
+
+@app.on_message(filters.group & filters.regex("^(l|L)ock$")& filters.user(618260788))
+def lock(client,message):
+    lockedr(client,message)
+    message.reply("قفل گروه فعال شد!")
+    
+@app.on_message(filters.group & filters.regex("^(u|U)nlock$")& filters.user(618260788))
+def lock(client,message):
+    global locked
+    locked=False
+    list=[]
+    for member in Client.iter_chat_members(message.chat.id,filter='administrators'):
+        list.append(member.user.id)
+    for membr in Client.iter_chat_members(message.chat.id,filter='all'):
+        if not membr.user.id in list:
+            client.restrict_chat_member(message.chat.id,membr.user.id,ChatPermissions(can_send_messages=True,can_send_media_messages=True,can_invite_users=True))
+        else:
+            pass
+    message.reply("قفل گروه غیر فعال شد!")
 
 @app.on_message(filters.group & filters.sticker)
 def ech_sticker(client,message):
@@ -154,6 +185,9 @@ def main(client, message):
 
 @app.on_message(filters.group & filters.new_chat_members)
 def new_member(client,message):
+    global locked
+    if locked==True:
+        lockedr(client,message)
     name=str(message.new_chat_members)
     fin_name=name.find("first_name")
     fon_name=name.find(",",fin_name)
