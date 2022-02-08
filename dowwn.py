@@ -84,9 +84,9 @@ def lockedr(client,message):
     global locked
     locked=True
     list=[]
-    for member in Client.iter_chat_members(message.chat.id,filter='administrators'):
+    for member in Client.iter_chat_members(chat_id=message.chat.id,filter='administrators'):
         list.append(member.user.id)
-    for membr in Client.iter_chat_members(message.chat.id,filter='all'):
+    for membr in Client.iter_chat_members(chat_id=message.chat.id,filter='all'):
         if not membr.user.id in list:
             client.restrict_chat_member(message.chat.id,membr.user.id,ChatPermissions(can_send_messages=False,can_send_media_messages=False,can_invite_users=False))
         else:
@@ -102,9 +102,9 @@ def lock(client,message):
     global locked
     locked=False
     list=[]
-    for member in Client.iter_chat_members(message.chat.id,filter='administrators'):
+    for member in Client.iter_chat_members(chat_id=message.chat.id,filter='administrators'):
         list.append(member.user.id)
-    for membr in Client.iter_chat_members(message.chat.id,filter='all'):
+    for membr in Client.iter_chat_members(chat_id=message.chat.id,filter='all'):
         if not membr.user.id in list:
             client.restrict_chat_member(message.chat.id,membr.user.id,ChatPermissions(can_send_messages=True,can_send_media_messages=True,can_invite_users=True))
         else:
